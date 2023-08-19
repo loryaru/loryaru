@@ -4,54 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
-        
-        th, td {
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
             padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
         }
-        
-        th {
-            background-color: #f2f2f2;
+
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
         }
-        
+
+        .menu-item {
+            width: calc(33.33% - 20px);
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
         @media (max-width: 768px) {
-            table {
-                font-size: 12px;
-            }
-            
-            th, td {
-                padding: 5px;
+            .menu-item {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>Заголовок 1</th>
-                <th>Заголовок 2</th>
-                <th>Заголовок 3</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Ячейка 1</td>
-                <td>Ячейка 2</td>
-                <td>Ячейка 3</td>
-            </tr>
-            <tr>
-                <td>Ячейка 4</td>
-                <td>Ячейка 5</td>
-                <td>Ячейка 6</td>
-            </tr>
-            <!-- Дополнительные строки таблицы -->
-        </tbody>
-    </table>
+    <header>
+        <h1>Ресторан "Вкусные блюда"</h1>
+    </header>
+
+    <div class="menu-container">
+        <div class="menu-item">
+            <h2>Стейк</h2>
+            <p>Сочный стейк из мраморной говядины. Подается с картофельным пюре и соусом.</p>
+        </div>
+        <div class="menu-item">
+            <h2>Паста</h2>
+            <p>Итальянская паста с томатным соусом и свежим базиликом.</p>
+        </div>
+        <div class="menu-item">
+            <h2>Суп</h2>
+            <p>Ароматный грибной суп с хлебом.</p>
+        </div>
+        <!-- Добавьте еще блюда -->
+    </div>
 </body>
 </html>
