@@ -3,45 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Название вашего колледжа</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f7f7f7;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem;
-        }
-        .content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <title>Адаптивное меню</title>
 </head>
 <body>
-    <header>
-        <h1>Добро пожаловать в наш колледж</h1>
-        <p>Образование - ключ к успеху!</p>
+    <header class="menu">
+        <div class="logo">Ваш логотип</div>
+        <nav class="menu-buttons">
+            <a href="#">Главная</a>
+            <a href="#">О нас</a>
+            <a href="#">Услуги</a>
+            <a href="#">Контакты</a>
+        </nav>
+        <div class="contact-icons">
+            <a href="#"><img src="phone-icon.png" alt="Телефон"></a>
+            <a href="#"><img src="email-icon.png" alt="Email"></a>
+        </div>
     </header>
-    <div class="content">
-        <h2>О нашем колледже</h2>
-        <p>Мы предлагаем широкий спектр образовательных программ, современные учебные планы и высококвалифицированных преподавателей. Наш колледж стремится предоставить студентам качественное образование и подготовку к успешной карьере.</p>
-        <h2>Наши программы</h2>
-        <ul>
-            <li>Бакалавриат</li>
-            <li>Магистратура</li>
-            <li>Дополнительные профессиональные программы</li>
-        </ul>
-        <h2>Свяжитесь с нами</h2>
-        <p>Если у вас есть вопросы или вы хотите узнать больше, свяжитесь с нами по адресу <a href="mailto:info@example.com">info@example.com</a>.</p>
-    </div>
 </body>
 </html>
