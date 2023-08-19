@@ -3,35 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Заголовок страницы</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Подключение внешних стилей, если есть -->
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        @media (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 5px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Заголовок страницы</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Главная</a></li>
-                <li><a href="#">О нас</a></li>
-                <li><a href="#">Контакты</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <main>
-        <section>
-            <h2>Секция 1</h2>
-            <p>Текст секции 1...</p>
-        </section>
-        
-        <section>
-            <h2>Секция 2</h2>
-            <p>Текст секции 2...</p>
-        </section>
-    </main>
-    
-    <footer>
-        <p>&copy; 2023 Ваше имя или название</p>
-    </footer>
+    <table>
+        <thead>
+            <tr>
+                <th>Заголовок 1</th>
+                <th>Заголовок 2</th>
+                <th>Заголовок 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ячейка 1</td>
+                <td>Ячейка 2</td>
+                <td>Ячейка 3</td>
+            </tr>
+            <tr>
+                <td>Ячейка 4</td>
+                <td>Ячейка 5</td>
+                <td>Ячейка 6</td>
+            </tr>
+            <!-- Дополнительные строки таблицы -->
+        </tbody>
+    </table>
 </body>
 </html>
