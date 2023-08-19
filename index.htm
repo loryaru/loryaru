@@ -3,61 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Название вашего колледжа</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f7f7f7;
         }
-
         header {
             background-color: #333;
             color: #fff;
             text-align: center;
-            padding: 10px;
+            padding: 1rem;
         }
-
-        .menu-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            padding: 20px;
-        }
-
-        .menu-item {
-            width: calc(33.33% - 20px);
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            box-sizing: border-box;
-        }
-
-        @media (max-width: 768px) {
-            .menu-item {
-                width: 100%;
-            }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Ресторан "Вкусные блюда"</h1>
+        <h1>Добро пожаловать в наш колледж</h1>
+        <p>Образование - ключ к успеху!</p>
     </header>
-
-    <div class="menu-container">
-        <div class="menu-item">
-            <h2>Стейк</h2>
-            <p>Сочный стейк из мраморной говядины. Подается с картофельным пюре и соусом.</p>
-        </div>
-        <div class="menu-item">
-            <h2>Паста</h2>
-            <p>Итальянская паста с томатным соусом и свежим базиликом.</p>
-        </div>
-        <div class="menu-item">
-            <h2>Суп</h2>
-            <p>Ароматный грибной суп с хлебом.</p>
-        </div>
-        <!-- Добавьте еще блюда -->
+    <div class="content">
+        <h2>О нашем колледже</h2>
+        <p>Мы предлагаем широкий спектр образовательных программ, современные учебные планы и высококвалифицированных преподавателей. Наш колледж стремится предоставить студентам качественное образование и подготовку к успешной карьере.</p>
+        <h2>Наши программы</h2>
+        <ul>
+            <li>Бакалавриат</li>
+            <li>Магистратура</li>
+            <li>Дополнительные профессиональные программы</li>
+        </ul>
+        <h2>Свяжитесь с нами</h2>
+        <p>Если у вас есть вопросы или вы хотите узнать больше, свяжитесь с нами по адресу <a href="mailto:info@example.com">info@example.com</a>.</p>
     </div>
 </body>
 </html>
