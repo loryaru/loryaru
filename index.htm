@@ -3,28 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Адаптивное меню</title>
+    <title>Online Блокнот</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .content {
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    <header class="menu">
-        <div class="logo">Ваш логотип</div>
-        <nav class="menu-buttons">
-            <a href="#">Главная</a>
-            <a href="#">О нас</a>
-            <a href="#">Услуги</a>
-            <a href="#">Контакты</a>
-        </nav>
-        <div class="contact-icons">
-            <a href="#"><img src="phone-icon.png" alt="Телефон"></a>
-            <a href="#"><img src="email-icon.png" alt="Email"></a>
+    <div class="container">
+        <div class="header">
+            <button class="button">Сохранить</button>
+            <button class="button">Скачать</button>
         </div>
-    </header>
-    <div class="slider">
-        <div class="slide">1<img src="https://images.unsplash.com/photo-1682685797660-3d847763208e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Картинка 1"></div>
-        <div class="slide">2<img src="https://images.unsplash.com/photo-1682685797660-3d847763208e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Картинка 2"></div>
-        <div class="slide">3<img src="https://images.unsplash.com/photo-1682685797660-3d847763208e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Картинка 3"></div>
-        <div class="slide">4<img src="https://images.unsplash.com/photo-1682685797660-3d847763208e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Картинка 4"></div>
+        <div class="content">
+            <!-- Здесь будет содержимое блокнота -->
+        </div>
     </div>
 </body>
 </html>
