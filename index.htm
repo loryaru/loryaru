@@ -53,11 +53,34 @@
     <div class="container">
         <div class="header">
             <button class="button">Сохранить</button>
-            <button class="button">Скачать</button>
+            <button class="button" id="downloadButton">Скачать</button>
         </div>
         <div class="content">
-            <textarea placeholder="Введите ваш текст здесь"></textarea>
+            <textarea id="noteTextarea" placeholder="Введите ваш текст здесь"></textarea>
         </div>
     </div>
+    <script>
+        const downloadButton = document.getElementById("downloadButton");
+        const noteTextarea = document.getElementById("noteTextarea");
+
+        downloadButton.addEventListener("click", () => {
+            const noteContent = noteTextarea.value;
+            const filename = `Записка_${getCurrentDate()}.txt`;
+            const blob = new Blob([noteContent], { type: "text/plain" });
+
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+        });
+
+        function getCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = (now.getMonth() + 1).toString().padStart(2, "0");
+            const day = now.getDate().toString().padStart(2, "0");
+            return `${day}.${month}.${year}`;
+        }
+    </script>
 </body>
 </html>
