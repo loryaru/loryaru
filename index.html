@@ -37,7 +37,18 @@
         .content {
             padding: 20px;
             background-color: #fff;
-            transition: background-color 0.3s;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            transition: background-color 0.3s, border-color 0.3s;
+            height: 50vh;
+        }
+
+        .content:hover {
+            border-color: #2676b0;
+        }
+
+        .content.active {
+            height: 100vh;
         }
 
         .content textarea {
