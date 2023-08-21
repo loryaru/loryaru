@@ -47,13 +47,27 @@
             resize: none; /* Запрещаем изменение размеров */
             box-sizing: border-box; /* Чтобы padding не увеличивал высоту */
         }
+        
+        body.light-theme {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        body.dark-theme {
+            background-color: #333;
+            color: #f4f4f4;
+        }
+
+        body.gray-theme {
+            background-color: #ddd;
+            color: #333;
+        }
     </style>
 </head>
-<body>
+<body class="light-theme">
     <div class="container">
         <div class="header">
-            <button class="button">Сохранить</button>
-            <button class="button" id="downloadButton">Скачать</button>
+            <button class="button" id="toggleThemeButton">Переключить тему</button>
             <button class="button" id="clearButton">Очистить</button>
         </div>
         <div class="content">
@@ -61,27 +75,27 @@
         </div>
     </div>
     <script>
-        const downloadButton = document.getElementById("downloadButton");
+        const toggleThemeButton = document.getElementById("toggleThemeButton");
         const noteTextarea = document.getElementById("noteTextarea");
         const clearButton = document.getElementById("clearButton");
 
-        // Загрузка сохраненного текста при загрузке страницы
+        // Загрузка сохраненного текста и темы при загрузке страницы
         window.onload = function() {
             const savedText = localStorage.getItem("savedNote");
+            const savedTheme = localStorage.getItem("savedTheme");
             if (savedText) {
                 noteTextarea.value = savedText;
             }
+            if (savedTheme) {
+                document.body.classList.add(savedTheme);
+            }
         };
 
-        downloadButton.addEventListener("click", () => {
-            const noteContent = noteTextarea.value;
-            const filename = `Записка_${getCurrentDate()}.txt`;
-            const blob = new Blob([noteContent], { type: "text/plain" });
-
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = filename;
-            link.click();
+        toggleThemeButton.addEventListener("click", () => {
+            const currentTheme = document.body.className;
+            const newTheme = getNextTheme(currentTheme);
+            document.body.className = newTheme;
+            localStorage.setItem("savedTheme", newTheme);
         });
 
         clearButton.addEventListener("click", () => {
@@ -94,12 +108,11 @@
             saveNoteToLocalStorage(currentText); // Сохраняем текст в localStorage
         });
 
-        function getCurrentDate() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = (now.getMonth() + 1).toString().padStart(2, "0");
-            const day = now.getDate().toString().padStart(2, "0");
-            return `${day}.${month}.${year}`;
+        function getNextTheme(currentTheme) {
+            const themes = ["light-theme", "gray-theme", "dark-theme"];
+            const currentIndex = themes.indexOf(currentTheme);
+            const nextIndex = (currentIndex + 1) % themes.length;
+            return themes[nextIndex];
         }
 
         function saveNoteToLocalStorage(text) {
