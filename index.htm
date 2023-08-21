@@ -44,7 +44,8 @@
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            resize: vertical;
+            resize: none; /* Запрещаем изменение размеров */
+            box-sizing: border-box; /* Чтобы padding не увеличивал высоту */
         }
     </style>
 </head>
