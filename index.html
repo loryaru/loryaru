@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.3s, color 0.3s, font-size 0.3s;
     }
     
     .container {
@@ -36,16 +36,22 @@
   <div class="container">
     <button id="themeButton">Сменить тему</button>
     <button id="downloadButton">Скачать</button>
+    <button id="fontButton">Изменить размер шрифта</button>
     <textarea id="noteArea" placeholder="Введите заметку..." spellcheck="false"></textarea>
   </div>
   <script>
     const themeButton = document.getElementById('themeButton');
     const downloadButton = document.getElementById('downloadButton');
+    const fontButton = document.getElementById('fontButton');
     const noteArea = document.getElementById('noteArea');
 
     let darkTheme = localStorage.getItem('darkTheme') === 'true';
+    let savedNote = localStorage.getItem('note') || '';
+    let fontSize = localStorage.getItem('fontSize') || 'medium';
 
     updateTheme();
+    updateFontSize();
+    noteArea.value = savedNote;
 
     themeButton.addEventListener('click', () => {
       darkTheme = !darkTheme;
@@ -64,11 +70,49 @@
       URL.revokeObjectURL(url);
     });
 
+    fontButton.addEventListener('click', () => {
+      switch (fontSize) {
+        case 'small':
+          fontSize = 'medium';
+          break;
+        case 'medium':
+          fontSize = 'large';
+          break;
+        case 'large':
+          fontSize = 'small';
+          break;
+        default:
+          fontSize = 'medium';
+          break;
+      }
+      updateFontSize();
+      localStorage.setItem('fontSize', fontSize);
+    });
+
+    noteArea.addEventListener('input', () => {
+      const noteContent = noteArea.value;
+      localStorage.setItem('note', noteContent);
+    });
+
     function updateTheme() {
       if (darkTheme) {
         document.body.classList.add('dark-theme');
       } else {
         document.body.classList.remove('dark-theme');
+      }
+    }
+
+    function updateFontSize() {
+      switch (fontSize) {
+        case 'small':
+          noteArea.style.fontSize = '14px';
+          break;
+        case 'medium':
+          noteArea.style.fontSize = '16px';
+          break;
+        case 'large':
+          noteArea.style.fontSize = '18px';
+          break;
       }
     }
   </script>
