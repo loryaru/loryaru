@@ -91,15 +91,15 @@
     <!-- Подключаем библиотеку Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body class="light-theme">
+<body class="light-theme" style="visibility: hidden;">
     <div class="container">
         <div class="header">
             <div class="header-icons">
-                <button class="icon-button" id="toggleThemeButton"><i class="fas fa-adjust"></i></button>
-                <button class="icon-button" id="fontSizeButton"><i class="fas fa-text-height"></i></button>
-                <button class="icon-button" id="clearButton"><i class="fas fa-trash"></i></button>
+                <button class="icon-button" id="toggleThemeButton" type="button"><i class="fas fa-adjust"></i></button>
+                <button class="icon-button" id="fontSizeButton" type="button"><i class="fas fa-text-height"></i></button>
+                <button class="icon-button" id="clearButton" type="button"><i class="fas fa-trash"></i></button>
             </div>
-            <button class="icon-button" id="downloadButton"><i class="fas fa-download"></i></button>
+            <button class="icon-button" id="downloadButton" type="button"><i class="fas fa-download"></i></button>
         </div>
         <div class="content">
             <textarea id="noteTextarea" placeholder="Введите ваш текст здесь"></textarea>
@@ -169,5 +169,6 @@
             document.body.style.visibility = "visible";
         });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 </body>
 </html>
