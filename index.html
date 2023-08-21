@@ -110,13 +110,26 @@
         const noteTextarea = document.getElementById("noteTextarea");
 
         const fontSizeOptions = ["small", "medium", "large"];
-        let currentFontSize = 0;
+        let currentFontSize = localStorage.getItem("fontSize") || 0;
+
+        fontSizeButton.innerHTML = getFontSizeButtonText(currentFontSize);
 
         fontSizeButton.addEventListener("click", () => {
             currentFontSize = (currentFontSize + 1) % fontSizeOptions.length;
             noteTextarea.style.fontSize = fontSizeOptions[currentFontSize];
-            fontSizeButton.innerHTML = `<i class="fas fa-font"></i> ${fontSizeOptions[currentFontSize].toUpperCase()}`;
+            fontSizeButton.innerHTML = getFontSizeButtonText(currentFontSize);
+            localStorage.setItem("fontSize", currentFontSize);
         });
+
+        function getFontSizeButtonText(sizeIndex) {
+            if (sizeIndex === 0) {
+                return '<i class="fas fa-font"></i> S';
+            } else if (sizeIndex === 1) {
+                return '<i class="fas fa-font"></i> M';
+            } else if (sizeIndex === 2) {
+                return '<i class="fas fa-font"></i> L';
+            }
+        }
 
         const toggleThemeButton = document.getElementById("toggleThemeButton");
         const body = document.body;
