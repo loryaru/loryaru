@@ -177,6 +177,11 @@
         
         // Восстановление цветовой темы при загрузке страницы
         body.classList.toggle("dark-theme", isDarkTheme);
+        
+        // Восстановление текста и количества символов при загрузке страницы
+        const savedText = localStorage.getItem("noteText") || "";
+        noteTextarea.value = savedText;
+        charCountElement.textContent = savedText.length;
 
     </script>
 </body>
