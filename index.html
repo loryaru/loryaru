@@ -96,7 +96,7 @@
         <div class="header">
             <div class="header-icons">
                 <button class="icon-button" id="toggleThemeButton"><i class="fas fa-adjust"></i></button>
-                <button class="icon-button" id="fontSizeButton"><i class="fas fa-plus"></i></button>
+                <button class="icon-button" id="fontSizeButton"><i class="fas fa-text-height"></i></button>
                 <button class="icon-button" id="clearButton"><i class="fas fa-trash"></i></button>
             </div>
             <button class="icon-button" id="downloadButton"><i class="fas fa-download"></i></button>
@@ -116,7 +116,8 @@
             currentFontSize = (currentFontSize + 1) % fontSizeOptions.length;
             const newSize = fontSizeOptions[currentFontSize];
             noteTextarea.style.fontSize = newSize;
-            fontSizeButton.innerHTML = `<i class="fas fa-plus"></i> ${newSize.toUpperCase()}`;
+            fontSizeButton.innerHTML = `<i class="fas fa-text-height"></i>`;
+            localStorage.setItem("savedFontSize", newSize);
         });
 
         const toggleThemeButton = document.getElementById("toggleThemeButton");
@@ -158,6 +159,11 @@
             if (savedTheme === "true") {
                 isDarkTheme = true;
                 body.classList.add("dark-theme");
+            }
+
+            const savedFontSize = localStorage.getItem("savedFontSize");
+            if (savedFontSize) {
+                noteTextarea.style.fontSize = savedFontSize;
             }
         });
     </script>
