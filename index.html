@@ -125,7 +125,7 @@
             if (sizeIndex === 0) {
                 return '<i class="fas fa-text-height"></i>';
             } else if (sizeIndex === 1) {
-                return '<i class="fas fa-font"></i>'; // Значок M
+                return '<i class="fas fa-text-height"></i>';
             } else if (sizeIndex === 2) {
                 return '<i class="fas fa-text-height"></i>';
             }
@@ -138,7 +138,7 @@
         toggleThemeButton.addEventListener("click", () => {
             isDarkTheme = !isDarkTheme;
             body.classList.toggle("dark-theme", isDarkTheme);
-            localStorage.setItem("isDarkTheme", isDarkTheme);
+            localStorage.setItem("isDarkTheme", JSON.stringify(isDarkTheme));
         });
 
         const clearButton = document.getElementById("clearButton");
@@ -165,6 +165,14 @@
         
         // Восстановление цветовой темы при загрузке страницы
         body.classList.toggle("dark-theme", isDarkTheme);
+        
+        // Восстановление текста при загрузке страницы
+        noteTextarea.value = localStorage.getItem("noteText") || "";
+        
+        // Сохранение текста при изменении
+        noteTextarea.addEventListener("input", () => {
+            localStorage.setItem("noteText", noteTextarea.value);
+        });
     </script>
 </body>
 </html>
