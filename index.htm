@@ -48,6 +48,7 @@
             box-sizing: border-box; /* Чтобы padding не увеличивал высоту */
         }
         
+        /* Стили для различных тем */
         body.light-theme {
             background-color: #f4f4f4;
             color: #333;
@@ -59,6 +60,22 @@
         }
 
         body.gray-theme {
+            background-color: #ddd;
+            color: #333;
+        }
+
+        /* Стили для textarea в различных темах */
+        .light-theme textarea {
+            background-color: #fff;
+            color: #333;
+        }
+
+        .dark-theme textarea {
+            background-color: #333;
+            color: #f4f4f4;
+        }
+
+        .gray-theme textarea {
             background-color: #ddd;
             color: #333;
         }
