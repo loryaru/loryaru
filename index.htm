@@ -5,48 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Блокнот</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .button {
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .content {
-            border: 1px solid #ccc;
-            padding: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 300px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: none; /* Запрещаем изменение размеров */
-            box-sizing: border-box; /* Чтобы padding не увеличивал высоту */
-        }
+        /* ... (ваш стиль CSS) ... */
     </style>
 </head>
 <body>
@@ -54,6 +13,7 @@
         <div class="header">
             <button class="button">Сохранить</button>
             <button class="button" id="downloadButton">Скачать</button>
+            <button class="button" id="clearButton">Очистить</button>
         </div>
         <div class="content">
             <textarea id="noteTextarea" placeholder="Введите ваш текст здесь"></textarea>
@@ -62,6 +22,15 @@
     <script>
         const downloadButton = document.getElementById("downloadButton");
         const noteTextarea = document.getElementById("noteTextarea");
+        const clearButton = document.getElementById("clearButton");
+
+        // Загрузка сохраненного текста при загрузке страницы
+        window.onload = function() {
+            const savedText = localStorage.getItem("savedNote");
+            if (savedText) {
+                noteTextarea.value = savedText;
+            }
+        };
 
         downloadButton.addEventListener("click", () => {
             const noteContent = noteTextarea.value;
@@ -74,12 +43,26 @@
             link.click();
         });
 
+        clearButton.addEventListener("click", () => {
+            noteTextarea.value = "";
+            saveNoteToLocalStorage(""); // Очищаем сохраненный текст
+        });
+
+        noteTextarea.addEventListener("input", () => {
+            const currentText = noteTextarea.value;
+            saveNoteToLocalStorage(currentText); // Сохраняем текст в localStorage
+        });
+
         function getCurrentDate() {
             const now = new Date();
             const year = now.getFullYear();
             const month = (now.getMonth() + 1).toString().padStart(2, "0");
             const day = now.getDate().toString().padStart(2, "0");
             return `${day}.${month}.${year}`;
+        }
+
+        function saveNoteToLocalStorage(text) {
+            localStorage.setItem("savedNote", text);
         }
     </script>
 </body>
