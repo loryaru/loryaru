@@ -7,17 +7,25 @@
     body {
       font-family: Arial, sans-serif;
       transition: background-color 0.3s, color 0.3s, font-size 0.3s;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f5f5f5;
     }
-    
+
     .container {
       text-align: center;
       padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
     }
-    
-    button {
-      margin: 10px;
-    }
-    
+
     .dark-theme {
       background-color: #333;
       color: #fff;
@@ -28,16 +36,42 @@
       height: 150px;
       padding: 10px;
       border: 1px solid #ccc;
+      font-size: 16px;
+      resize: none;
+      margin-bottom: 15px;
+    }
+
+    .button {
+      background-color: #3498db;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #2980b9;
+    }
+
+    .icon {
+      font-size: 20px;
+      margin-right: 10px;
     }
   </style>
   <title>Заметки</title>
 </head>
 <body>
   <div class="container">
-    <button id="themeButton">Сменить тему</button>
-    <button id="downloadButton">Скачать</button>
-    <button id="fontButton">Изменить размер шрифта</button>
-    <button id="clearButton">Очистить текст</button>
+    <button id="themeButton" class="button"><i class="icon">🌙</i>Сменить тему</button>
+    <button id="downloadButton" class="button"><i class="icon">⬇️</i>Скачать</button>
+    <button id="fontButton" class="button"><i class="icon">A</i>Размер шрифта</button>
+    <button id="clearButton" class="button"><i class="icon">✖️</i>Очистить</button>
     <textarea id="noteArea" placeholder="Введите заметку..." spellcheck="false"></textarea>
   </div>
   <script>
