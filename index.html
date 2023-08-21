@@ -41,6 +41,7 @@
             border-radius: 10px;
             transition: background-color 0.3s, border-color 0.3s;
             height: 50vh;
+            overflow: hidden;
         }
 
         .content:hover {
@@ -57,7 +58,7 @@
             border: none;
             resize: none;
             outline: none;
-            transition: background-color 0.3s, color 0.3s; /* Добавлено */
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .dark-theme {
@@ -66,8 +67,8 @@
         }
 
         .dark-theme .content textarea {
-            background-color: #333; /* Добавлено */
-            color: #f4f4f4; /* Добавлено */
+            background-color: #333;
+            color: #f4f4f4;
         }
 
         .light-theme .icon-button {
@@ -91,7 +92,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="light-theme">
-     <div class="container">
+    <div class="container">
         <div class="header">
             <div class="header-icons">
                 <button class="icon-button" id="toggleThemeButton"><i class="fas fa-adjust"></i></button>
@@ -105,51 +106,6 @@
         </div>
     </div>
     <script>
-        const toggleThemeButton = document.getElementById("toggleThemeButton");
-        const noteTextarea = document.getElementById("noteTextarea");
-        const downloadButton = document.getElementById("downloadButton");
-        const clearButton = document.getElementById("clearButton");
-
-        // Загрузка сохраненного текста и темы при загрузке страницы
-        window.onload = function() {
-            const savedText = localStorage.getItem("savedNote");
-            const savedTheme = localStorage.getItem("savedTheme");
-            if (savedText) {
-                noteTextarea.value = savedText;
-            }
-            if (savedTheme) {
-                document.body.className = savedTheme;
-            }
-        };
-
-        toggleThemeButton.addEventListener("click", () => {
-            const currentTheme = document.body.className;
-            const newTheme = getNextTheme(currentTheme);
-            document.body.className = newTheme;
-            localStorage.setItem("savedTheme", newTheme);
-        });
-
-        downloadButton.addEventListener("click", () => {
-            const noteContent = noteTextarea.value;
-            const filename = `Записка_${getCurrentDate()}.txt`;
-            const blob = new Blob([noteContent], { type: "text/plain" });
-
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = filename;
-            link.click();
-        });
-
-        clearButton.addEventListener("click", () => {
-            noteTextarea.value = "";
-            saveNoteToLocalStorage(""); // Очищаем сохраненный текст
-        });
-
-        noteTextarea.addEventListener("input", () => {
-            const currentText = noteTextarea.value;
-            saveNoteToLocalStorage(currentText); // Сохраняем текст в localStorage
-        });
-
         const fontSizeButton = document.getElementById("fontSizeButton");
         const noteTextarea = document.getElementById("noteTextarea");
 
@@ -161,25 +117,34 @@
             noteTextarea.style.fontSize = fontSizeOptions[currentFontSize];
             fontSizeButton.innerHTML = `<i class="fas fa-font"></i> ${fontSizeOptions[currentFontSize].toUpperCase()}`;
         });
-        
-        function getNextTheme(currentTheme) {
-            const themes = ["light-theme", "dark-theme"];
-            const currentIndex = themes.indexOf(currentTheme);
-            const nextIndex = (currentIndex + 1) % themes.length;
-            return themes[nextIndex];
-        }
 
-        function getCurrentDate() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = (now.getMonth() + 1).toString().padStart(2, "0");
-            const day = now.getDate().toString().padStart(2, "0");
-            return `${day}.${month}.${year}`;
-        }
+        const toggleThemeButton = document.getElementById("toggleThemeButton");
+        const body = document.body;
+        let isDarkTheme = false;
 
-        function saveNoteToLocalStorage(text) {
-            localStorage.setItem("savedNote", text);
-        }
+        toggleThemeButton.addEventListener("click", () => {
+            isDarkTheme = !isDarkTheme;
+            body.classList.toggle("dark-theme", isDarkTheme);
+        });
+
+        const clearButton = document.getElementById("clearButton");
+        const downloadButton = document.getElementById("downloadButton");
+
+        clearButton.addEventListener("click", () => {
+            noteTextarea.value = "";
+        });
+
+        downloadButton.addEventListener("click", () => {
+            const content = noteTextarea.value;
+            const filename = `Записка_${new Date().toLocaleDateString()}.txt`;
+            const blob = new Blob([content], { type: "text/plain" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        });
     </script>
 </body>
 </html>
