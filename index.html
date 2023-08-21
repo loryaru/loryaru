@@ -6,98 +6,92 @@
     <title>Online Блокнот</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
             transition: background-color 0.3s, color 0.3s;
         }
-
+        
+        .light-theme {
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        
+        .dark-theme {
+            background-color: #333;
+            color: #f8f8f8;
+        }
+        
         .container {
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
             padding: 20px;
         }
-
+        
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
-
+        
         .icon-button {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 18px;
-            color: #3498db;
-            transition: color 0.3s;
+            font-size: 24px;
+            color: inherit;
+            margin-right: 10px;
         }
-
+        
         .content {
-            padding: 20px;
-            background-color: #fff;
-            border: 2px solid #3498db;
-            border-radius: 10px;
-            transition: background-color 0.3s, border-color 0.3s;
-            height: 50vh;
-            overflow: hidden;
+            position: relative;
         }
-
-        .content:hover {
-            border-color: #2676b0;
-        }
-
-        .content.active {
-            height: 100vh;
-        }
-
-        .content textarea {
+        
+        #noteTextarea {
             width: 100%;
-            height: 100%;
+            height: 200px;
             border: none;
+            background-color: #f8f8f8;
+            padding: 10px;
             resize: none;
             outline: none;
-            transition: background-color 0.3s, color 0.3s;
         }
-
-        .dark-theme {
-            background-color: #333;
-            color: #f4f4f4;
-        }
-
-        .dark-theme .content textarea {
-            background-color: #333;
-            color: #f4f4f4;
-        }
-
-        .light-theme .icon-button {
-            color: #3498db;
-        }
-
-        .dark-theme .icon-button {
-            color: #f4f4f4;
-        }
-
-        .dark-theme .content {
-            background-color: #333;
-        }
-
-        .header-icons {
-            display: flex;
-            gap: 10px;
-        }
-
+        
         .by-line-container {
             display: flex;
             justify-content: space-between;
-            width: 100%;
+            align-items: center;
             margin-top: 5px;
         }
         
-        .by-line {
+        .stats, .by-line {
             font-size: 12px;
             color: #ccc;
+        }
+        
+        #toggleThemeButton {
+            font-size: 18px;
+        }
+        
+        .stats {
+            display: flex;
+            align-items: center;
+        }
+        
+        #fontSizeButton {
+            font-size: 18px;
+        }
+        
+        #clearButton {
+            font-size: 18px;
+        }
+        
+        #downloadButton {
+            font-size: 18px;
+        }
+        
+        .stats {
+            margin-right: auto;
         }
     </style>
     <!-- Подключаем библиотеку Font Awesome -->
@@ -114,11 +108,11 @@
             <button class="icon-button" id="downloadButton"><i class="fas fa-download"></i></button>
         </div>
         <div class="content">
-            <textarea id="noteTextarea" placeholder="Ваша заметка o(≧▽≦)o ..."></textarea>
+            <textarea id="noteTextarea" placeholder="Введите ваш текст здесь"></textarea>
         </div>
         <div class="by-line-container">
             <div class="stats">
-                <span id="charCount">0</span> символов, <span id="wordCount">0</span> слов
+                <span id="charCount">0</span> :символов, <span id="wordCount">0</span> :слов
             </div>
             <div class="by-line">by loryaru</div>
         </div>
