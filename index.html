@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
@@ -24,64 +25,42 @@
             margin-bottom: 20px;
         }
 
-        .button {
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .content {
-            border: 1px solid #ccc;
-            padding: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 300px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: none; /* Запрещаем изменение размеров */
-            box-sizing: border-box; /* Чтобы padding не увеличивал высоту */
-        }
-        
-        body.light-theme {
-            background-color: #f4f4f4;
-            color: #333;
-        }
-
-        body.dark-theme {
-            background-color: #333;
-            color: #f4f4f4;
-        }
-
-        /* Стили для textarea в различных темах */
-        .light-theme textarea {
-            background-color: #fff;
-            color: #333;
-        }
-
-        .dark-theme textarea {
-            background-color: #333;
-            color: #f4f4f4;
-        }
-
-        /* Стили для кнопок-иконок */
         .icon-button {
             background: none;
             border: none;
             cursor: pointer;
             font-size: 18px;
+            color: #3498db;
+            transition: color 0.3s;
         }
 
-        .header {
+        .content {
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .dark-theme {
+            background-color: #333;
+            color: #f4f4f4;
+        }
+
+        .light-theme .icon-button {
+            color: #3498db;
+        }
+
+        .dark-theme .icon-button {
+            color: #f4f4f4;
+        }
+
+        .dark-theme .content {
+            background-color: #333;
+        }
+
+        .header-icons {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            gap: 10px;
         }
     </style>
     <!-- Подключаем библиотеку Font Awesome -->
@@ -90,7 +69,7 @@
 <body class="light-theme">
     <div class="container">
         <div class="header">
-            <div>
+            <div class="header-icons">
                 <button class="icon-button" id="toggleThemeButton"><i class="fas fa-adjust"></i></button>
                 <button class="icon-button" id="clearButton"><i class="fas fa-trash"></i></button>
             </div>
