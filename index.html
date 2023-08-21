@@ -36,15 +36,14 @@
     const downloadButton = document.getElementById('downloadButton');
     const noteArea = document.getElementById('noteArea');
 
-    let darkTheme = false;
+    let darkTheme = localStorage.getItem('darkTheme') === 'true';
+
+    updateTheme();
 
     themeButton.addEventListener('click', () => {
       darkTheme = !darkTheme;
-      if (darkTheme) {
-        document.body.classList.add('dark-theme');
-      } else {
-        document.body.classList.remove('dark-theme');
-      }
+      updateTheme();
+      localStorage.setItem('darkTheme', darkTheme);
     });
 
     downloadButton.addEventListener('click', () => {
@@ -57,6 +56,14 @@
       a.click();
       URL.revokeObjectURL(url);
     });
+
+    function updateTheme() {
+      if (darkTheme) {
+        document.body.classList.add('dark-theme');
+      } else {
+        document.body.classList.remove('dark-theme');
+      }
+    }
   </script>
 </body>
 </html>
