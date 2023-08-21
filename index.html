@@ -25,6 +25,7 @@
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
+            box-sizing: border-box;
         }
         
         .header {
@@ -98,11 +99,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="light-theme">
-     <div class="container">
+    <div class="container">
         <div class="header">
             <div class="header-icons">
                 <button class="icon-button" id="toggleThemeButton"><i class="fas fa-adjust"></i></button>
-                <button class="icon-button" id="fontSizeButton"><i class="fas fa-text-height"></i></button>
+                <button class="icon-button" id="fontSizeButton"><i class="fas fa-font"></i></button>
                 <button class="icon-button" id="clearButton"><i class="fas fa-trash"></i></button>
             </div>
             <button class="icon-button" id="downloadButton"><i class="fas fa-download"></i></button>
@@ -112,51 +113,70 @@
         </div>
         <div class="by-line-container">
             <div class="stats">
-                <span id="charCount">0</span> :символов, <span id="wordCount">0</span> :слов
+                <span id="charCount">0</span> символов, <span id="wordCount">0</span> слов
             </div>
             <div class="by-line">by loryaru</div>
         </div>
     </div>
     <script>
+        // Получение элементов DOM
         const fontSizeButton = document.getElementById("fontSizeButton");
-        const noteTextarea = document.getElementById("noteTextarea");
-        
-        const fontSizeOptions = ["small", "medium", "large"];
-        let currentFontSize = localStorage.getItem("fontSize") || 1;
-        
-        fontSizeButton.innerHTML = '<i class="fas fa-text-height"></i>';
-        
-        fontSizeButton.addEventListener("click", () => {
-            currentFontSize = (currentFontSize + 1) % fontSizeOptions.length;
-            noteTextarea.style.fontSize = fontSizeOptions[currentFontSize];
-            fontSizeButton.innerHTML = getFontSizeButtonIcon(currentFontSize);
-            localStorage.setItem("fontSize", currentFontSize);
-        });
-        
-        function getFontSizeButtonIcon(sizeIndex) {
-            if (sizeIndex === 0) {
-                return '<i class="fas fa-text-height"></i>';
-            } else if (sizeIndex === 1) {
-                return '<i class="fas fa-font"></i>';
-            } else if (sizeIndex === 2) {
-                return '<i class="fas fa-text-height"></i>';
-            }
-        }
-        
         const toggleThemeButton = document.getElementById("toggleThemeButton");
-        const body = document.body;
-        let isDarkTheme = JSON.parse(localStorage.getItem("isDarkTheme")) || false;
-        
-        toggleThemeButton.addEventListener("click", () => {
-            isDarkTheme = !isDarkTheme;
-            body.classList.toggle("dark-theme", isDarkTheme);
-            localStorage.setItem("isDarkTheme", JSON.stringify(isDarkTheme));
-        });
-        
+        const downloadButton = document.getElementById("downloadButton");
+        const clearButton = document.getElementById("clearButton");
         const noteTextarea = document.getElementById("noteTextarea");
         const charCountElement = document.getElementById("charCount");
         const wordCountElement = document.getElementById("wordCount");
         
+        // Функция для изменения размера шрифта
+        function changeFontSize(sizeIndex) {
+            const fontSizeOptions = ["small", "medium", "large"];
+            noteTextarea.style.fontSize = fontSizeOptions[sizeIndex];
+            localStorage.setItem("fontSize", sizeIndex);
+            fontSizeButton.innerHTML = getFontSizeButtonIcon(sizeIndex);
+        }
+        
+        // Получение иконки для кнопки изменения размера шрифта
+        function getFontSizeButtonIcon(sizeIndex) {
+            if (sizeIndex === 0) {
+                return '<i class="fas fa-font"></i>';
+            } else if (sizeIndex === 1) {
+                return '<i class="fas fa-text-height"></i>';
+            } else if (sizeIndex === 2) {
+                return '<i class="fas fa-font"></i>';
+            }
+        }
+        
+        // Обработчик клика на кнопке изменения размера шрифта
+        fontSizeButton.addEventListener("click", () => {
+            currentFontSize = (currentFontSize + 1) % 3;
+            changeFontSize(currentFontSize);
+        });
+        
+        // Функция для смены темы
+        function toggleTheme() {
+            const body = document.body;
+            const isDarkTheme = body.classList.toggle("dark-theme");
+            localStorage.setItem("isDarkTheme", isDarkTheme);
+        }
+        
+        // Обработчик клика на кнопке смены темы
+        toggleThemeButton.addEventListener("click", toggleTheme);
+        
+        // Восстановление размера шрифта и темы при загрузке страницы
+        const currentFontSize = localStorage.getItem("fontSize") || 1;
+        changeFontSize(currentFontSize);
+        
+        const isDarkTheme = JSON.parse(localStorage.getItem("isDarkTheme")) || false;
+        toggleThemeButton.innerHTML = isDarkTheme ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        document.body.classList.toggle("dark-theme", isDarkTheme);
+        
+        // Восстановление текста и количества символов при загрузке страницы
+        const savedText = localStorage.getItem("noteText") || "";
+        noteTextarea.value = savedText;
+        charCountElement.textContent = savedText.length;
+        
+        // Обработчик ввода текста в поле
         noteTextarea.addEventListener("input", () => {
             const content = noteTextarea.value;
             const charCount = content.length;
@@ -164,18 +184,43 @@
         
             charCountElement.textContent = charCount;
             wordCountElement.textContent = wordCount;
+        
+            localStorage.setItem("noteText", content);
         });
         
-        // Восстановление размера шрифта при загрузке страницы
-        noteTextarea.style.fontSize = fontSizeOptions[currentFontSize];
+        // Обработчик клика на кнопке скачивания
+        downloadButton.addEventListener("click", () => {
+            const content = noteTextarea.value;
+            const filename = `Записка_${getCurrentDate()}.txt`;
+            const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
         
-        // Восстановление цветовой темы при загрузке страницы
-        body.classList.toggle("dark-theme", isDarkTheme);
+            if (window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveBlob(blob, filename);
+            } else {
+                const link = document.createElement("a");
+                link.href = window.URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+                window.URL.revokeObjectURL(link.href);
+            }
+        });
         
-        // Восстановление текста и количества символов при загрузке страницы
-        const savedText = localStorage.getItem("noteText") || "";
-        noteTextarea.value = savedText;
-        charCountElement.textContent = savedText.length;
+        // Обработчик клика на кнопке очистки
+        clearButton.addEventListener("click", () => {
+            noteTextarea.value = "";
+            charCountElement.textContent = "0";
+            wordCountElement.textContent = "0";
+            localStorage.setItem("noteText", "");
+        });
+        
+        // Получение текущей даты в формате YYYY-MM-DD
+        function getCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, "0");
+            const day = String(now.getDate()).padStart(2, "0");
+            return `${year}-${month}-${day}`;
+        }
 
     </script>
 </body>
