@@ -57,11 +57,17 @@
             border: none;
             resize: none;
             outline: none;
+            transition: background-color 0.3s, color 0.3s; /* Добавлено */
         }
 
         .dark-theme {
             background-color: #333;
             color: #f4f4f4;
+        }
+
+        .dark-theme .content textarea {
+            background-color: #333; /* Добавлено */
+            color: #f4f4f4; /* Добавлено */
         }
 
         .light-theme .icon-button {
