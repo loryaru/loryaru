@@ -90,7 +90,7 @@
 
         .by-line-container {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             width: 100%;
             margin-top: 5px;
         }
@@ -117,6 +117,9 @@
             <textarea id="noteTextarea" placeholder="Ваша заметка o(≧▽≦)o ..."></textarea>
         </div>
         <div class="by-line-container">
+            <div class="stats">
+                <span id="charCount">0</span> символов, <span id="wordCount">0</span> слов
+            </div>
             <div class="by-line">by loryaru</div>
         </div>
     </div>
@@ -173,6 +176,19 @@
             a.download = filename;
             a.click();
             URL.revokeObjectURL(url);
+        });
+
+        const noteTextarea = document.getElementById("noteTextarea");
+        const charCountElement = document.getElementById("charCount");
+        const wordCountElement = document.getElementById("wordCount");
+
+        noteTextarea.addEventListener("input", () => {
+            const content = noteTextarea.value;
+            const charCount = content.length;
+            const wordCount = content.trim().split(/\s+/).filter(Boolean).length;
+
+            charCountElement.textContent = charCount;
+            wordCountElement.textContent = wordCount;
         });
 
         // Восстановление размера шрифта при загрузке страницы
