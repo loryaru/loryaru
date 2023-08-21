@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -37,12 +37,14 @@
     <button id="themeButton">Сменить тему</button>
     <button id="downloadButton">Скачать</button>
     <button id="fontButton">Изменить размер шрифта</button>
+    <button id="clearButton">Очистить текст</button>
     <textarea id="noteArea" placeholder="Введите заметку..." spellcheck="false"></textarea>
   </div>
   <script>
     const themeButton = document.getElementById('themeButton');
     const downloadButton = document.getElementById('downloadButton');
     const fontButton = document.getElementById('fontButton');
+    const clearButton = document.getElementById('clearButton');
     const noteArea = document.getElementById('noteArea');
 
     let darkTheme = localStorage.getItem('darkTheme') === 'true';
@@ -87,6 +89,11 @@
       }
       updateFontSize();
       localStorage.setItem('fontSize', fontSize);
+    });
+
+    clearButton.addEventListener('click', () => {
+      noteArea.value = '';
+      localStorage.removeItem('note');
     });
 
     noteArea.addEventListener('input', () => {
