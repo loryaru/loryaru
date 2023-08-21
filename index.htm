@@ -48,7 +48,6 @@
             box-sizing: border-box; /* Чтобы padding не увеличивал высоту */
         }
         
-        /* Стили для различных тем */
         body.light-theme {
             background-color: #f4f4f4;
             color: #333;
@@ -57,11 +56,6 @@
         body.dark-theme {
             background-color: #333;
             color: #f4f4f4;
-        }
-
-        body.gray-theme {
-            background-color: #ddd;
-            color: #333;
         }
 
         /* Стили для textarea в различных темах */
@@ -74,17 +68,13 @@
             background-color: #333;
             color: #f4f4f4;
         }
-
-        .gray-theme textarea {
-            background-color: #ddd;
-            color: #333;
-        }
     </style>
 </head>
 <body class="light-theme">
     <div class="container">
         <div class="header">
             <button class="button" id="toggleThemeButton">Переключить тему</button>
+            <button class="button" id="downloadButton">Скачать</button>
             <button class="button" id="clearButton">Очистить</button>
         </div>
         <div class="content">
@@ -94,6 +84,7 @@
     <script>
         const toggleThemeButton = document.getElementById("toggleThemeButton");
         const noteTextarea = document.getElementById("noteTextarea");
+        const downloadButton = document.getElementById("downloadButton");
         const clearButton = document.getElementById("clearButton");
 
         // Загрузка сохраненного текста и темы при загрузке страницы
@@ -104,7 +95,7 @@
                 noteTextarea.value = savedText;
             }
             if (savedTheme) {
-                document.body.classList.add(savedTheme);
+                document.body.className = savedTheme;
             }
         };
 
@@ -113,6 +104,17 @@
             const newTheme = getNextTheme(currentTheme);
             document.body.className = newTheme;
             localStorage.setItem("savedTheme", newTheme);
+        });
+
+        downloadButton.addEventListener("click", () => {
+            const noteContent = noteTextarea.value;
+            const filename = `Записка_${getCurrentDate()}.txt`;
+            const blob = new Blob([noteContent], { type: "text/plain" });
+
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
         });
 
         clearButton.addEventListener("click", () => {
@@ -126,10 +128,18 @@
         });
 
         function getNextTheme(currentTheme) {
-            const themes = ["light-theme", "gray-theme", "dark-theme"];
+            const themes = ["light-theme", "dark-theme"];
             const currentIndex = themes.indexOf(currentTheme);
             const nextIndex = (currentIndex + 1) % themes.length;
             return themes[nextIndex];
+        }
+
+        function getCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = (now.getMonth() + 1).toString().padStart(2, "0");
+            const day = now.getDate().toString().padStart(2, "0");
+            return `${day}.${month}.${year}`;
         }
 
         function saveNoteToLocalStorage(text) {
