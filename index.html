@@ -110,9 +110,9 @@
         const noteTextarea = document.getElementById("noteTextarea");
 
         const fontSizeOptions = ["small", "medium", "large"];
-        let currentFontSize = localStorage.getItem("fontSize") || "medium"; // Дефолтный размер "M"
+        let currentFontSize = localStorage.getItem("fontSize") || 1; // Дефолтный размер "M"
 
-        fontSizeButton.innerHTML = getFontSizeButtonIcon(currentFontSize);
+        fontSizeButton.innerHTML = '<i class="fas fa-text-height"></i>'; // Исходный значок
 
         fontSizeButton.addEventListener("click", () => {
             currentFontSize = (currentFontSize + 1) % fontSizeOptions.length;
@@ -125,7 +125,7 @@
             if (sizeIndex === 0) {
                 return '<i class="fas fa-text-height"></i>';
             } else if (sizeIndex === 1) {
-                return '<i class="fas fa-text-height"></i>';
+                return '<i class="fas fa-font"></i>'; // Значок M
             } else if (sizeIndex === 2) {
                 return '<i class="fas fa-text-height"></i>';
             }
