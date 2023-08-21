@@ -110,7 +110,7 @@
         const noteTextarea = document.getElementById("noteTextarea");
 
         const fontSizeOptions = ["small", "medium", "large"];
-        let currentFontSize = localStorage.getItem("fontSize") || 1; // Дефолтный размер "M"
+        let currentFontSize = localStorage.getItem("fontSize") || "medium"; // Дефолтный размер "M"
 
         fontSizeButton.innerHTML = getFontSizeButtonIcon(currentFontSize);
 
