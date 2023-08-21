@@ -126,84 +126,58 @@
     <script>
         const fontSizeButton = document.getElementById("fontSizeButton");
         const noteTextarea = document.getElementById("noteTextarea");
-
+        
         const fontSizeOptions = ["small", "medium", "large"];
-        let currentFontSize = localStorage.getItem("fontSize") || 1; // Дефолтный размер "M"
-
-        fontSizeButton.innerHTML = '<i class="fas fa-text-height"></i>'; // Исходный значок
-
+        let currentFontSize = localStorage.getItem("fontSize") || 1;
+        
+        fontSizeButton.innerHTML = '<i class="fas fa-text-height"></i>';
+        
         fontSizeButton.addEventListener("click", () => {
             currentFontSize = (currentFontSize + 1) % fontSizeOptions.length;
             noteTextarea.style.fontSize = fontSizeOptions[currentFontSize];
             fontSizeButton.innerHTML = getFontSizeButtonIcon(currentFontSize);
             localStorage.setItem("fontSize", currentFontSize);
         });
-
+        
         function getFontSizeButtonIcon(sizeIndex) {
             if (sizeIndex === 0) {
                 return '<i class="fas fa-text-height"></i>';
             } else if (sizeIndex === 1) {
-                return '<i class="fas fa-text-height"></i>';
+                return '<i class="fas fa-font"></i>';
             } else if (sizeIndex === 2) {
                 return '<i class="fas fa-text-height"></i>';
             }
         }
-
+        
         const toggleThemeButton = document.getElementById("toggleThemeButton");
         const body = document.body;
         let isDarkTheme = JSON.parse(localStorage.getItem("isDarkTheme")) || false;
-
+        
         toggleThemeButton.addEventListener("click", () => {
             isDarkTheme = !isDarkTheme;
             body.classList.toggle("dark-theme", isDarkTheme);
             localStorage.setItem("isDarkTheme", JSON.stringify(isDarkTheme));
         });
-
-        const clearButton = document.getElementById("clearButton");
-        const downloadButton = document.getElementById("downloadButton");
-
-        clearButton.addEventListener("click", () => {
-            noteTextarea.value = "";
-        });
-
-        downloadButton.addEventListener("click", () => {
-            const content = noteTextarea.value;
-            const filename = `Записка_${new Date().toLocaleDateString()}.txt`;
-            const blob = new Blob([content], { type: "text/plain" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = filename;
-            a.click();
-            URL.revokeObjectURL(url);
-        });
-
+        
         const noteTextarea = document.getElementById("noteTextarea");
         const charCountElement = document.getElementById("charCount");
         const wordCountElement = document.getElementById("wordCount");
-
+        
         noteTextarea.addEventListener("input", () => {
             const content = noteTextarea.value;
             const charCount = content.length;
             const wordCount = content.trim().split(/\s+/).filter(Boolean).length;
-
+        
             charCountElement.textContent = charCount;
             wordCountElement.textContent = wordCount;
         });
-
+        
         // Восстановление размера шрифта при загрузке страницы
         noteTextarea.style.fontSize = fontSizeOptions[currentFontSize];
         
         // Восстановление цветовой темы при загрузке страницы
         body.classList.toggle("dark-theme", isDarkTheme);
-        
-        // Восстановление текста при загрузке страницы
-        noteTextarea.value = localStorage.getItem("noteText") || "";
-        
-        // Сохранение текста при изменении
-        noteTextarea.addEventListener("input", () => {
-            localStorage.setItem("noteText", noteTextarea.value);
-        });
+
     </script>
 </body>
 </html>
