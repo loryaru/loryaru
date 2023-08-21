@@ -96,7 +96,7 @@
         <div class="header">
             <div class="header-icons">
                 <button class="icon-button" id="toggleThemeButton"><i class="fas fa-adjust"></i></button>
-                <button class="icon-button" id="fontSizeButton"><i class="fas fa-font"></i></button>
+                <button class="icon-button" id="fontSizeButton"><i class="fas fa-plus"></i></button>
                 <button class="icon-button" id="clearButton"><i class="fas fa-trash"></i></button>
             </div>
             <button class="icon-button" id="downloadButton"><i class="fas fa-download"></i></button>
@@ -114,8 +114,9 @@
 
         fontSizeButton.addEventListener("click", () => {
             currentFontSize = (currentFontSize + 1) % fontSizeOptions.length;
-            noteTextarea.style.fontSize = fontSizeOptions[currentFontSize];
-            fontSizeButton.innerHTML = `<i class="fas fa-font"></i> ${fontSizeOptions[currentFontSize].toUpperCase()}`;
+            const newSize = fontSizeOptions[currentFontSize];
+            noteTextarea.style.fontSize = newSize;
+            fontSizeButton.innerHTML = `<i class="fas fa-plus"></i> ${newSize.toUpperCase()}`;
         });
 
         const toggleThemeButton = document.getElementById("toggleThemeButton");
@@ -125,6 +126,7 @@
         toggleThemeButton.addEventListener("click", () => {
             isDarkTheme = !isDarkTheme;
             body.classList.toggle("dark-theme", isDarkTheme);
+            localStorage.setItem("isDarkTheme", isDarkTheme);
         });
 
         const clearButton = document.getElementById("clearButton");
@@ -144,6 +146,19 @@
             a.download = filename;
             a.click();
             URL.revokeObjectURL(url);
+        });
+
+        window.addEventListener("load", () => {
+            const savedText = localStorage.getItem("savedText");
+            if (savedText) {
+                noteTextarea.value = savedText;
+            }
+
+            const savedTheme = localStorage.getItem("isDarkTheme");
+            if (savedTheme === "true") {
+                isDarkTheme = true;
+                body.classList.add("dark-theme");
+            }
         });
     </script>
 </body>
