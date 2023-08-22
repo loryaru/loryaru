@@ -10,6 +10,7 @@
       margin: 0;
       padding: 0;
       background-color: #f0f0f0;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     .container {
@@ -18,34 +19,32 @@
       padding: 20px;
       background-color: #fff;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, color 0.3s;
     }
 
     .button {
-      background-color: #3498db;
-      color: #fff;
+      background-color: transparent;
+      color: #3498db;
       border: none;
       padding: 10px 15px;
       cursor: pointer;
-      border-radius: 3px;
-      margin-right: 10px;
+      transition: color 0.3s;
     }
 
     .button:hover {
-      background-color: #2980b9;
-    }
-
-    .icon {
-      margin-right: 5px;
+      color: #2980b9;
     }
 
     #noteArea {
       width: 100%;
-      height: 200px;
+      height: calc(100vh - 200px);
       padding: 10px;
       font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
+      background-color: transparent;
+      border: none;
+      outline: none;
       resize: none;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     .dark-theme {
@@ -57,10 +56,10 @@
 </head>
 <body>
   <div class="container">
-    <button id="themeButton" class="button"><i class="fas fa-adjust icon"></i> Сменить тему</button>
-    <button id="fontSizeButton" class="button"><i class="fas fa-font icon"></i> Размер шрифта</button>
-    <button id="clearButton" class="button"><i class="fas fa-trash icon"></i> Очистить</button>
-    <button id="downloadButton" class="button"><i class="fas fa-download icon"></i> Скачать</button>
+    <button id="themeButton" class="button"><i class="fas fa-adjust"></i></button>
+    <button id="fontSizeButton" class="button"><i class="fas fa-font"></i></button>
+    <button id="clearButton" class="button"><i class="fas fa-trash"></i></button>
+    <button id="downloadButton" class="button"><i class="fas fa-download"></i></button>
     <textarea id="noteArea" placeholder="Введите заметку..." spellcheck="false"></textarea>
   </div>
   <script>
