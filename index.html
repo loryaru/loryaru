@@ -1,201 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Устанавливаем кодировку символов для корректного отображения текста --> 
     <meta charset="UTF-8">
-    <!-- Задаем масштаб и начальный размер для мобильных устройств -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Устанавливаем заголовок страницы -->
     <title>Online Блокнот</title>
-    <!-- Внутренние стили для страницы -->
     <style>
-        /* Оформление страницы */
         body {
-            font-family: Arial, sans-serif; /* Устанавливаем шрифт для всего текста на странице */
-            margin: 0; /* Убираем внешние отступы */
-            padding: 0; /* Убираем внутренние отступы */
-            transition: background-color 0.3s, color 0.3s; /* Плавная анимация смены цветов */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
         }
-    
-        /* Контейнер для размещения содержимого страницы */
+
         .container {
-            max-width: 800px; /* Максимальная ширина контейнера */
-            margin: 0 auto; /* Центрирование контейнера по горизонтали */
-            padding: 20px; /* Внутренние отступы контейнера */
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
         }
-    
-        /* Верхняя панель с заголовками и кнопками */
+
         .header {
-            display: flex; /* Отображение элементов в ряд */
-            justify-content: space-between; /* Выравнивание по краям с промежутком между элементами */
-            align-items: center; /* Выравнивание элементов по вертикали */
-            margin-bottom: 20px; /* Отступ снизу панели */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
-    
-        /* Стиль кнопок с иконками */
+
         .icon-button {
-            background: none; /* Убираем фон кнопки */
-            border: none; /* Убираем границу кнопки */
-            cursor: pointer; /* Устанавливаем указатель при наведении на кнопку */
-            font-size: 18px; /* Размер шрифта иконки */
-            color: #3498db; /* Цвет иконки */
-            transition: color 0.3s; /* Плавная анимация смены цвета при наведении */
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #3498db;
+            transition: color 0.3s;
         }
-    
-        /* Стиль содержимого блока */
+
         .content {
-            padding: 20px; /* Внутренние отступы блока */
-            background-color: #fff; /* Цвет фона блока */
-            border: 2px solid #3498db; /* Граница блока */
-            border-radius: 10px; /* Закругление углов границы */
-            transition: background-color 0.3s, border-color 0.3s; /* Плавная анимация смены цветов */
-            height: 50vh; /* Высота блока (половина высоты viewport) */
-            overflow: hidden; /* Скрытие содержимого, выходящего за границы блока */
+            padding: 20px;
+            background-color: #fff;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            transition: background-color 0.3s, border-color 0.3s;
+            height: 50vh;
+            overflow: hidden;
         }
-    
-        /* Анимация границы блока при наведении */
+
         .content:hover {
-            border-color: #2676b0; /* Цвет границы при наведении */
+            border-color: #2676b0;
         }
-    
-        /* Анимация увеличения высоты блока при активации */
+
         .content.active {
-            height: 100vh; /* Полная высота viewport */
+            height: 100vh;
         }
-    
-        /* Стиль текстового поля */
+
         .content textarea {
-            width: 100%; /* 100% ширина текстового поля */
-            height: 100%; /* 100% высота текстового поля */
-            border: none; /* Убираем границу текстового поля */
-            resize: none; /* Отключаем возможность изменения размера текстового поля */
-            outline: none; /* Убираем контур при нажатии на текстовое поле */
-            transition: background-color 0.3s, color 0.3s; /* Плавная анимация смены цветов */
+            width: 100%;
+            height: 100%;
+            border: none;
+            resize: none;
+            outline: none;
+            transition: background-color 0.3s, color 0.3s;
         }
-    
-        /* Стиль для темной темы */
+
         .dark-theme {
-            background-color: #333; /* Цвет фона для темной темы */
-            color: #f4f4f4; /* Цвет текста для темной темы */
+            background-color: #333;
+            color: #f4f4f4;
         }
-    
-        /* Изменение цвета кнопок в темной теме */
+
         .dark-theme .icon-button {
             color: #f4f4f4;
         }
-    
-        /* Изменение цвета текстового поля в темной теме */
+
         .dark-theme .content textarea {
             background-color: #333;
             color: #f4f4f4;
         }
-    
-        /* Изменение цвета заголовков в темной теме */
+
         .dark-theme .header {
             color: #f4f4f4;
         }
-    
-        /* Изменение цвета фона блока содержимого в темной теме */
+
         .dark-theme .content {
             background-color: #333;
         }
-    
-        /* Отображение иконок в шапке */
+
         .header-icons {
-            display: flex; /* Отображение иконок в ряд */
-            gap: 10px; /* Расстояние между иконками */
+            display: flex;
+            gap: 10px;
+        }
+
+        .settings-menu {
+            border-radius: 10px;
+            border: 2px solid #3498db;
+            overflow: hidden;
+            max-height: 0;
+            transition: 0.3s ease;
+            justify-content: left;
+            opacity: 0%;
+        }
+
+        .settings-menu.active {
+            margin: 10px 0px;
+            max-height: 100px;
+            padding: 10px;
+            border: 2px solid #3498db;
+            opacity: 100%;
+            transition: 0.3s ease;
+        }
+
+        .setting-item {
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .font-select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #fff;
+            color: #000;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-theme .font-select {
+            background-color: #333;
+            color: #f4f4f4;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #3498db;
+            border-radius: 5px;
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            ::-webkit-scrollbar {
+                width: 0;
+            }
         }
     </style>
-    <!-- Подключаем библиотеку Font Awesome для иконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="light-theme">
     <div class="container">
-        <!-- Верхняя панель с кнопками и иконками -->
         <div class="header">
-            <!-- Иконки в шапке -->
             <div class="header-icons">
-                <!-- Кнопка переключения темы -->
-                <button class="icon-button" id="toggleThemeButton"><i class="fas fa-adjust"></i></button>
-                <!-- Кнопка изменения размера текста -->
-                <button class="icon-button" id="fontSizeButton"><i class="fas fa-text-height"></i></button>
-                <!-- Кнопка очистки содержимого -->
+                <button class="icon-button" id="settingsButton"><i class="fas fa-cog"></i></button>
                 <button class="icon-button" id="clearButton"><i class="fas fa-trash"></i></button>
+                <button class="icon-button" id="toggleThemeButton"><i class="fas fa-adjust"></i></button>
             </div>
-            <!-- Кнопка загрузки текста в виде файла -->
             <button class="icon-button" id="downloadButton"><i class="fas fa-download"></i></button>
         </div>
-        <!-- Блок с текстовым полем -->
+        <div id="settingsMenu" class="settings-menu active">
+            <select id="fontSelect" class="font-select">
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Georgia">Georgia</option>
+            </select>
+            <select id="fontSizeSelect" class="font-select">
+                <option value="14">14</option>
+                <option value="16">16</option>
+                <option value="20">20</option>
+                <option value="24">24</option>
+                <option value="28">28</option>
+            </select>
+        </div>
         <div class="content">
             <textarea id="noteTextarea" placeholder="Начинай... (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"></textarea>
         </div>
     </div>
     <script>
-        // Получаем кнопку изменения размера текста и поле для ввода текста
-        const fontSizeButton = document.getElementById("fontSizeButton");
         const noteTextarea = document.getElementById("noteTextarea");
 
-        // Загрузка сохраненного размера из localStorage или устанавливаем значение по умолчанию
-        let currentFontSize = localStorage.getItem("fontSize") || "16";
-        noteTextarea.style.fontSize = `${currentFontSize}px`;
+        const fontSizeSelect = document.getElementById("fontSizeSelect");
+        const savedFontSize = localStorage.getItem("selectedFontSize") || "16";
+        fontSizeSelect.value = savedFontSize;
 
-        // Варианты размеров текста
-        const fontSizeOptions = ["14", "16", "20"];
-
-        // Обработчик клика на кнопке изменения размера текста
-        fontSizeButton.addEventListener("click", () => {
-            currentFontSize = fontSizeOptions[(fontSizeOptions.indexOf(currentFontSize) + 1) % fontSizeOptions.length];
-            noteTextarea.style.fontSize = `${currentFontSize}px`;
-            localStorage.setItem("fontSize", currentFontSize);
+        fontSizeSelect.addEventListener("change", () => {
+            const selectedFontSize = fontSizeSelect.value;
+            noteTextarea.style.fontSize = `${selectedFontSize}px`;
+            localStorage.setItem("selectedFontSize", selectedFontSize);
         });
 
-        // Обработчик загрузки сохраненного текста из localStorage при загрузке страницы
+        noteTextarea.style.fontSize = `${savedFontSize}px`;
+
         noteTextarea.value = localStorage.getItem("savedText") || "";
 
-        // Получаем кнопку переключения темы и тело страницы
         const toggleThemeButton = document.getElementById("toggleThemeButton");
         const body = document.body;
         let isDarkTheme = JSON.parse(localStorage.getItem("isDarkTheme")) || false;
 
-        // Обработчик клика на кнопке переключения темы
         toggleThemeButton.addEventListener("click", () => {
             isDarkTheme = !isDarkTheme;
             body.classList.toggle("dark-theme", isDarkTheme);
             localStorage.setItem("isDarkTheme", isDarkTheme);
         });
 
-        // Получаем кнопку очистки содержимого
         const clearButton = document.getElementById("clearButton");
 
-        // Обработчик клика на кнопке очистки содержимого
         clearButton.addEventListener("click", () => {
             noteTextarea.value = "";
             localStorage.removeItem("savedText");
         });
 
-        // Получаем кнопку загрузки текста в виде файла
-        const downloadButton = document.getElementById("downloadButton");
+        const settingsButton = document.getElementById("settingsButton");
+        const settingsMenu = document.getElementById("settingsMenu");
+        let isMenuOpen = true;
 
-        // Обработчик клика на кнопке загрузки текста в виде файла
-        downloadButton.addEventListener("click", () => {
-            const content = noteTextarea.value;
-            const filename = `Записка_${new Date().toLocaleDateString()}.txt`;
-            const blob = new Blob([content], { type: "text/plain" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = filename;
-            a.click();
-            URL.revokeObjectURL(url);
+        settingsButton.addEventListener("click", (event) => {
+            event.stopPropagation();
+            settingsMenu.classList.toggle("active");
+            isMenuOpen = settingsMenu.classList.contains("active");
+            localStorage.setItem("isMenuOpen", isMenuOpen);
         });
 
-        // Сохраняем текст в локальное хранилище при каждом изменении
+        const savedIsMenuOpen = localStorage.getItem("isMenuOpen");
+        if (savedIsMenuOpen) {
+            isMenuOpen = savedIsMenuOpen === "true";
+            settingsMenu.classList.toggle("active", isMenuOpen);
+        }
+
+        const fontSelect = document.getElementById("fontSelect");
+
+        fontSelect.addEventListener("change", () => {
+            const selectedFont = fontSelect.value;
+            if (selectedFont) {
+                noteTextarea.style.fontFamily = selectedFont;
+                localStorage.setItem("selectedFont", selectedFont);
+            }
+        });
+
+        const savedFont = localStorage.getItem("selectedFont");
+        if (savedFont) {
+            fontSelect.value = savedFont;
+            noteTextarea.style.fontFamily = savedFont;
+        }
+
         noteTextarea.addEventListener("input", () => {
             const textValue = noteTextarea.value;
             localStorage.setItem("savedText", textValue);
         });
 
-        // Восстановление цветовой темы при загрузке страницы
         body.classList.toggle("dark-theme", isDarkTheme);
     </script>
 </body>
