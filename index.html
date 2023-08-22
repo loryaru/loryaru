@@ -5,95 +5,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      transition: background-color 0.3s, color 0.3s, font-size 0.3s;
-    }
-    
-    .container {
-      text-align: center;
-      padding: 20px;
-    }
-    
-    button {
-      margin: 10px;
-    }
-    
-    .dark-theme {
-      background-color: #333;
-      color: #fff;
+      transition: background-color 0.3s, color 0.3s;
     }
 
-    textarea {
+    .light-theme {
+      background-color: #f8f8f8;
+      color: #333;
+    }
+
+    .dark-theme {
+      background-color: #333;
+      color: #f8f8f8;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .icon-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+      color: inherit;
+      margin-right: 10px;
+    }
+
+    #noteTextarea {
       width: 100%;
-      height: 150px;
+      height: 200px;
+      border: none;
+      background-color: #f8f8f8;
       padding: 10px;
-      border: 1px solid #ccc;
+      resize: none;
+      outline: none;
+    }
+
+    #toggleThemeButton {
+      font-size: 18px;
     }
   </style>
   <title>Заметки</title>
 </head>
 <body>
   <div class="container">
-    <button id="themeButton">Сменить тему</button>
-    <button id="downloadButton">Скачать</button>
-    <button id="fontButton">Изменить размер шрифта</button>
-    <button id="clearButton">Очистить текст</button>
-    <textarea id="noteArea" placeholder="Введите заметку..." spellcheck="false"></textarea>
+    <div class="header">
+      <button id="toggleThemeButton" class="icon-button"><i class="fas fa-adjust"></i></button>
+    </div>
+    <div class="content">
+      <textarea id="noteTextarea" placeholder="Введите заметку..." spellcheck="false"></textarea>
+    </div>
   </div>
-  <script>
+    <script>
     const themeButton = document.getElementById('themeButton');
-    const downloadButton = document.getElementById('downloadButton');
-    const fontButton = document.getElementById('fontButton');
-    const clearButton = document.getElementById('clearButton');
     const noteArea = document.getElementById('noteArea');
 
     let darkTheme = localStorage.getItem('darkTheme') === 'true';
     let savedNote = localStorage.getItem('note') || '';
-    let fontSize = localStorage.getItem('fontSize') || 'medium';
 
     updateTheme();
-    updateFontSize();
     noteArea.value = savedNote;
 
     themeButton.addEventListener('click', () => {
       darkTheme = !darkTheme;
       updateTheme();
       localStorage.setItem('darkTheme', darkTheme);
-    });
-
-    downloadButton.addEventListener('click', () => {
-      const noteContent = noteArea.value;
-      const blob = new Blob([noteContent], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'note.txt';
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    fontButton.addEventListener('click', () => {
-      switch (fontSize) {
-        case 'small':
-          fontSize = 'medium';
-          break;
-        case 'medium':
-          fontSize = 'large';
-          break;
-        case 'large':
-          fontSize = 'small';
-          break;
-        default:
-          fontSize = 'medium';
-          break;
-      }
-      updateFontSize();
-      localStorage.setItem('fontSize', fontSize);
-    });
-
-    clearButton.addEventListener('click', () => {
-      noteArea.value = '';
-      localStorage.removeItem('note');
     });
 
     noteArea.addEventListener('input', () => {
@@ -103,23 +84,11 @@
 
     function updateTheme() {
       if (darkTheme) {
-        document.body.classList.add('dark-theme');
+        document.body.style.backgroundColor = '#333';
+        document.body.style.color = '#fff';
       } else {
-        document.body.classList.remove('dark-theme');
-      }
-    }
-
-    function updateFontSize() {
-      switch (fontSize) {
-        case 'small':
-          noteArea.style.fontSize = '14px';
-          break;
-        case 'medium':
-          noteArea.style.fontSize = '16px';
-          break;
-        case 'large':
-          noteArea.style.fontSize = '18px';
-          break;
+        document.body.style.backgroundColor = '#f5f5f5';
+        document.body.style.color = '#000';
       }
     }
   </script>
