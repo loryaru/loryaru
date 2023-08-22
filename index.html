@@ -1,149 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f0f0f0;
-      transition: background-color 0.3s, color 0.3s;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Блокнот</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s, color 0.3s;
-    }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-    .button {
-      background-color: transparent;
-      color: #3498db;
-      border: none;
-      padding: 10px 15px;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-    .button:hover {
-      color: #2980b9;
-    }
+        .icon-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #3498db;
+            transition: color 0.3s;
+        }
 
-    #noteArea {
-      width: 100%;
-      height: calc(100vh - 200px);
-      padding: 10px;
-      font-size: 16px;
-      background-color: transparent;
-      border: none;
-      outline: none;
-      resize: none;
-      transition: background-color 0.3s, color 0.3s;
-    }
+        .content {
+            padding: 20px;
+            background-color: #fff;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            transition: background-color 0.3s, border-color 0.3s;
+            height: 50vh;
+            overflow: hidden;
+        }
 
-    .dark-theme {
-      background-color: #333;
-      color: #fff;
-    }
-  </style>
-  <title>Заметки</title>
+        .content:hover {
+            border-color: #2676b0;
+        }
+
+        .content.active {
+            height: 100vh;
+        }
+
+        .content textarea {
+            width: 100%;
+            height: 100%;
+            border: none;
+            resize: none;
+            outline: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-theme {
+            background-color: #333;
+            color: #f4f4f4;
+        }
+
+        .dark-theme .content textarea {
+            background-color: #333;
+            color: #f4f4f4;
+        }
+
+        .light-theme .icon-button {
+            color: #3498db;
+        }
+
+        .dark-theme .icon-button {
+            color: #f4f4f4;
+        }
+
+        .dark-theme .content {
+            background-color: #333;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+    <!-- Подключаем библиотеку Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
-  <div class="container">
-    <button id="themeButton" class="button"><i class="fas fa-adjust"></i></button>
-    <button id="fontSizeButton" class="button"><i class="fas fa-font"></i></button>
-    <button id="clearButton" class="button"><i class="fas fa-trash"></i></button>
-    <button id="downloadButton" class="button"><i class="fas fa-download"></i></button>
-    <textarea id="noteArea" placeholder="Введите заметку..." spellcheck="false"></textarea>
-  </div>
-  <script>
-    const themeButton = document.getElementById('themeButton');
-    const fontSizeButton = document.getElementById('fontSizeButton');
-    const clearButton = document.getElementById('clearButton');
-    const downloadButton = document.getElementById('downloadButton');
-    const noteArea = document.getElementById('noteArea');
+<body class="light-theme">
+    <div class="container">
+        <div class="header">
+            <div class="header-icons">
+                <button class="icon-button" id="toggleThemeButton"><i class="fas fa-adjust"></i></button>
+                <button class="icon-button" id="fontSizeButton"><i class="fas fa-text-height"></i></button>
+                <button class="icon-button" id="clearButton"><i class="fas fa-trash"></i></button>
+            </div>
+            <button class="icon-button" id="downloadButton"><i class="fas fa-download"></i></button>
+        </div>
+        <div class="content">
+            <textarea id="noteTextarea" placeholder="Начинай... (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"></textarea>
+        </div>
+    </div>
+     <script>
 
-    let darkTheme = localStorage.getItem('darkTheme') === 'true';
-    let savedNote = localStorage.getItem('note') || '';
-    let fontSize = localStorage.getItem('fontSize') || 'medium';
+        const fontSizeButton = document.getElementById("fontSizeButton");
+        const noteTextarea = document.getElementById("noteTextarea");
 
-    updateTheme();
-    updateFontSize();
-    noteArea.value = savedNote;
+        // Загрузка сохраненного размера из localStorage
+        let currentFontSize = localStorage.getItem("fontSize") || "16";
+        noteTextarea.style.fontSize = `${currentFontSize}px`;
 
-    themeButton.addEventListener('click', () => {
-      darkTheme = !darkTheme;
-      updateTheme();
-      localStorage.setItem('darkTheme', darkTheme);
-    });
+        const fontSizeOptions = ["14", "16", "20"];
 
-    fontSizeButton.addEventListener('click', () => {
-      switch (fontSize) {
-        case 'small':
-          fontSize = 'medium';
-          break;
-        case 'medium':
-          fontSize = 'large';
-          break;
-        case 'large':
-          fontSize = 'small';
-          break;
-        default:
-          fontSize = 'medium';
-          break;
-      }
-      updateFontSize();
-      localStorage.setItem('fontSize', fontSize);
-    });
+        fontSizeButton.addEventListener("click", () => {
+            // Переключение на следующий размер текста
+            currentFontSize = fontSizeOptions[(fontSizeOptions.indexOf(currentFontSize) + 1) % fontSizeOptions.length];
+            noteTextarea.style.fontSize = `${currentFontSize}px`;
 
-    clearButton.addEventListener('click', () => {
-      noteArea.value = '';
-      localStorage.removeItem('note');
-    });
-
-    downloadButton.addEventListener('click', () => {
-      const noteContent = noteArea.value;
-      const blob = new Blob([noteContent], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'note.txt';
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    noteArea.addEventListener('input', () => {
-      const noteContent = noteArea.value;
-      localStorage.setItem('note', noteContent);
-    });
-
-    function updateTheme() {
-      if (darkTheme) {
-        document.body.classList.add('dark-theme');
-      } else {
-        document.body.classList.remove('dark-theme');
-      }
-    }
-
-    function updateFontSize() {
-      switch (fontSize) {
-        case 'small':
-          noteArea.style.fontSize = '14px';
-          break;
-        case 'medium':
-          noteArea.style.fontSize = '16px';
-          break;
-        case 'large':
-          noteArea.style.fontSize = '18px';
-          break;
-      }
-    }
-</script>
+            // Сохранение размера в localStorage
+            localStorage.setItem("fontSize", currentFontSize);
+        });
+        // При загрузке страницы получаем сохраненное значение текста из локального хранилища
+        noteTextarea.value = localStorage.getItem("savedText") || "";
+        
+        const toggleThemeButton = document.getElementById("toggleThemeButton");
+        const body = document.body;
+        let isDarkTheme = JSON.parse(localStorage.getItem("isDarkTheme")) || false;
+        
+        toggleThemeButton.addEventListener("click", () => {
+            isDarkTheme = !isDarkTheme;
+            body.classList.toggle("dark-theme", isDarkTheme);
+            localStorage.setItem("isDarkTheme", isDarkTheme);
+        });
+        
+        const clearButton = document.getElementById("clearButton");
+        const downloadButton = document.getElementById("downloadButton");
+        
+        clearButton.addEventListener("click", () => {
+            noteTextarea.value = "";
+            localStorage.removeItem("savedText");
+        });
+        
+        downloadButton.addEventListener("click", () => {
+            const content = noteTextarea.value;
+            const filename = `Записка_${new Date().toLocaleDateString()}.txt`;
+            const blob = new Blob([content], { type: "text/plain" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+        
+        // Сохраняем текст в локальное хранилище при каждом изменении
+        noteTextarea.addEventListener("input", () => {
+            const textValue = noteTextarea.value;
+            localStorage.setItem("savedText", textValue);
+        });
+        
+        // Восстановление цветовой темы при загрузке страницы
+        body.classList.toggle("dark-theme", isDarkTheme);
+    </script>
 </body>
+</head>
 </html>
