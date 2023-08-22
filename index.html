@@ -7,73 +7,60 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      transition: background-color 0.3s, color 0.3s, font-size 0.3s;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #f5f5f5;
+      background-color: #f0f0f0;
     }
 
     .container {
-      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
       padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .button {
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 3px;
+      margin-right: 10px;
+    }
+
+    .button:hover {
+      background-color: #2980b9;
+    }
+
+    .icon {
+      margin-right: 5px;
+    }
+
+    #noteArea {
       width: 100%;
-      max-width: 400px;
+      height: 200px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      resize: none;
     }
 
     .dark-theme {
       background-color: #333;
       color: #fff;
     }
-
-    textarea {
-      width: 100%;
-      height: 150px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      resize: none;
-      margin-bottom: 15px;
-    }
-
-    .button {
-      background-color: transparent;
-      border: none;
-      color: #000;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: color 0.3s;
-      margin: 0 5px;
-    }
-
-    .button:hover {
-      color: #3498db;
-    }
-
-    .icon {
-      font-size: 20px;
-      margin-right: 10px;
-    }
   </style>
   <title>Заметки</title>
 </head>
 <body>
   <div class="container">
-    <button id="themeButton" class="button"><i class="fas fa-adjust icon"></i></button>
-    <button id="fontSizeButton" class="button"><i class="fas fa-font icon"></i></button>
-    <button id="clearButton" class="button"><i class="fas fa-trash icon"></i></button>
-    <button id="downloadButton" class="button"><i class="fas fa-download icon"></i></button>
+    <button id="themeButton" class="button"><i class="fas fa-adjust icon"></i> Сменить тему</button>
+    <button id="fontSizeButton" class="button"><i class="fas fa-font icon"></i> Размер шрифта</button>
+    <button id="clearButton" class="button"><i class="fas fa-trash icon"></i> Очистить</button>
+    <button id="downloadButton" class="button"><i class="fas fa-download icon"></i> Скачать</button>
     <textarea id="noteArea" placeholder="Введите заметку..." spellcheck="false"></textarea>
   </div>
   <script>
@@ -158,6 +145,6 @@
           break;
       }
     }
-  </script>
+</script>
 </body>
 </html>
